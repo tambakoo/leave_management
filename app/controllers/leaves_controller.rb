@@ -58,7 +58,7 @@ class LeavesController < ApplicationController
 
   def employee_records
     if params[:noquery].present?
-    @employees = User.all
+    @employees = current_user.employees.all
     elsif
     @employees = [User.where(id: params[:user_id])].flatten
     @state = params[:state]
