@@ -1,0 +1,60 @@
+<center>
+  <% unless @active_leaves.empty? %>
+      <h3>Listing your active leaves</h3>
+        <table class="table table-bordered table-striped",  style= "width:850px">
+          <tr>
+            <th>Employee</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Leave size</th>
+            <th>State</th>
+            <th></th>
+          </tr>
+        <% @active_leaves.each do |leave| %>
+          <tr>
+            <th><%= leave.user.email %></th>
+            <th><%= leave.start_date.strftime("%a, %d-%b-%y") %></th>
+            <th><%= leave.end_date.strftime("%a, %d-%b-%y")%></th>
+            <th><%= pluralize( leave.duration.to_i, 'day' ) %></th>
+            <th><%= leave.state %></th>
+            <% if leave.user == current_user %>
+              <th><%=button_to "cancel request", leave, method: :delete%></th>
+            <% end %>
+            <% if leave.user.manager==current_user %>
+              <th><%= form_for leave do |f| %>
+                <%= f.select :state, ["rejected", "approved"] %>
+                <%= f.submit "update" %>
+                <% end  %>
+              </th>
+            <% end %>
+          </tr>
+         <% end %>
+        </table>  
+  <% else %>
+    <h3>You have no active leaves!</h3>
+      <p>You can apply for a leave from the topbar menu</p>
+  <% end %>
+  <br> <br>
+
+  <% unless @inactive_leaves.blank? %>
+      <h3>Listing your inactive leaves</h3>
+        <table class="table table-bordered table-striped",  style= "width:800px">
+          <tr>
+            <th>Employee</th>
+            <th>From</th>
+            <th>To</th>
+            <th>Leave size</th>
+            <th>State</th>
+          </tr>
+        <% @inactive_leaves.each do |leave| %>
+          <tr>
+            <th><%= leave.user.email %></th>
+            <th><%= leave.start_date.strftime("%a, %d-%b-%y") %></th>
+            <th><%= leave.end_date.strftime("%a, %d-%b-%y")%></th>
+            <th><%= pluralize( leave.duration.to_i, 'day' ) %></th>
+            <th><%= leave.state %></th>
+          </tr>
+         <% end %>
+        </table>  
+  <% end %>
+</center>

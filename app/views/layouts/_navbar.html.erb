@@ -1,0 +1,33 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">Leave Management</a>
+    </div>
+      <% if user_signed_in? %>
+        <ul class="nav navbar-nav">
+            <li><%= link_to "Apply for leave", new_leave_path %></a></li>
+            <% if current_user.manager? %>
+              <li><%= link_to "Respond to leave requests", leaves_path(mgr: true) %></a></li>
+              <li><%= link_to "Employee leaves record", employee_records_path(noquery: true)%></a></li>
+            <% end %>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "Help", help_path %></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#"><%= current_user.email%>
+            <span class="caret"></span></a>
+            <ul class="dropdown-menu">
+              <li><%= link_to "Edit Account", edit_user_registration_path %></li>
+              <li><%= link_to "Sign out", destroy_user_session_path, method: :delete%></li>
+            </ul>
+      <% else %>
+        <ul class="nav navbar-nav navbar-right">
+          <li><%= link_to "Sign in", new_user_session_path %></li>
+        </ul>
+      <% end %>
+      </li>
+    </ul>
+  </div>
+</nav>

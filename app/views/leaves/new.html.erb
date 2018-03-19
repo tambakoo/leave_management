@@ -1,0 +1,21 @@
+<center>
+  <% if current_user.leave_record.leaves_remaining > 0 %>
+    <h5>Taking some time off?</h5>
+    <br>
+    <%= form_for @leave do |f|%>
+      From
+      <%= f.date_select :start_date%>
+      <br>
+      <br>
+      Until
+      <%= f.date_select :end_date %>
+      <br>
+      <br>
+      <%= f.submit "Apply for leave" %>
+    <% end %>
+  <% end %>
+  <h3>You have <%= pluralize(current_user.leave_record.leaves_remaining, 'leave' ) %> remaining.</h3>
+  <% if current_user.leave_record.leaves_remaining.eql?(0) %>
+    <p>Speak with your manager if you'll need more leaves.</p>
+  <% end %>
+</center>
