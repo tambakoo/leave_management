@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   root 'leaves#index'
   resources :leaves
   resources :leave_records
+  resources :salaries
   get '/employee_records', to: 'leaves#employee_records'
   get '/help', to: 'application#help'
+  get '/structure', to: 'application#tree'
 end

@@ -5,5 +5,9 @@ class ApplicationController < ActionController::Base
   def help
     render 'layouts/_help'
   end
+
+  def tree
+    render 'layouts/_tree'
+  end
 end
 

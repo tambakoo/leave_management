@@ -7,45 +7,6 @@
     <%= submit_tag 'Filter' %>
 <% end %>
 <br>
-<% @employees.each do |x| %>
-<table class="table table-bordered table-striped",  style= "width:850px">
-          <tr>
-            <th><%= x.email%></th>
-            <th>Remaining Leaves <%= x.leave_record.leaves_remaining%> <br>
-                Allotted Leaves <%= x.leave_record.leaves_allotted%>
-            </th>
-            <% @record = x.leave_record %>
-            <th><%= form_for @record do |f| %>
-                  <small><%= f.label :leaves_allotted, 'change allotted leaves' %></small>
-                  <br>
-                  <%= f.number_field :leaves_allotted, min: x.leave_record.leaves_allotted - x.leave_record.leaves_remaining %>
-                  <%= f.submit 'go' %>
-                <% end %>
-            </th>
-          </tr>
-            <% if @state.eql?("all") || @state.nil? %>
-            <tr><%= @state %> leaves for <%= x.email%></tr>
-              <% x.leaves.each do |leave|%>
-              <tr>
-                <th><%= leave.start_date.strftime("%a, %d-%b-%y") %></th>
-                <th><%= leave.end_date.strftime("%a, %d-%b-%y")%></th>
-                <th><%= pluralize( leave.duration.to_i, 'day' ) %></th>
-                <th><%= leave.state %></th>
-                <% end %>
-              </tr>
-            <% elsif !@state.eql?("all") && !@state.nil? %>
-            <tr><%= @state %> leaves for <%= x.email%></tr>
-              <% x.leaves.where(state: @state).each do |leave|%>
-              <tr>
-                <th><%= leave.start_date.strftime("%a, %d-%b-%y") %></th>
-                <th><%= leave.end_date.strftime("%a, %d-%b-%y")%></th>
-                <th><%= pluralize( leave.duration.to_i, 'day' ) %></th>
-                <th><%= leave.state %></th>
-              <% end %>
-              </tr>
-            <% end %>
-          </tr>
-       <% end %>
-</table>  
+<%= render 'record_table'%>
  <br>
 </center>  

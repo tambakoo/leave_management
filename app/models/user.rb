@@ -19,7 +19,9 @@ class User < ApplicationRecord
  
   belongs_to :manager, class_name: "User", required: false
 
-  after_create :create_leave_record
+  has_one :salary, dependent: :destroy
+
+  after_create :create_leave_record, :create_salary
 
   def manager?
     employees.present?
@@ -31,6 +33,14 @@ class User < ApplicationRecord
 
   def create_leave_record
     LeaveRecord.create(user: User.last, leaves_remaining: 0, leaves_allotted: 0)    
+  end
+
+  def create_salary
+    Salary.create(user: User.last, salary: 1)    
+  end
+
+  def self.is_manager?(employee,manager)
+    employee.manager == manager
   end
 
 

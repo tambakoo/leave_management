@@ -1,0 +1,25 @@
+<center>
+  <h3>Company Heirarchy</h3>
+  <br>
+  <div class="container">
+    <table class="table table-bordered" style= "width:475px">
+      <tbody>
+        <tr>
+          <td><strong>Manager</strong></td>
+          <td><strong>Employee</strong></td>
+        </tr>
+        <% User.all.map do |x|%>
+        <tr>
+          <% unless x.employees.empty? %>
+            <td><%= x.email%></td>
+            <td><% x.employees.map do |y|%>
+              <%= y.email%>,
+              <% end %>
+          <% end %>
+          </td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+<center>

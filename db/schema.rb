@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180319091550) do
+ActiveRecord::Schema.define(version: 20180324100529) do
 
   create_table "leave_records", force: :cascade do |t|
     t.integer  "user_id"
@@ -30,6 +30,14 @@ ActiveRecord::Schema.define(version: 20180319091550) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["user_id"], name: "index_leaves_on_user_id"
+  end
+
+  create_table "salaries", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "salary"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["user_id"], name: "index_salaries_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
